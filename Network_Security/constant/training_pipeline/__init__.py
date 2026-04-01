@@ -49,6 +49,8 @@ DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR : str = "transformed_object"
 ## KNN IMPUTER CLASS TO REPLACE NAN VALUES
 DATA_TRANSFORMATION_IMPUTER_PARAMS : dict = {
     "missing_values" : np.nan,
-    "n_neighbours":3,
+    "n_neighbors":3,
     "weights":"uniform",
 }
+
+PREPROCESSING_OBJECT_FILE_NAME ="prprocessing.pkl"
