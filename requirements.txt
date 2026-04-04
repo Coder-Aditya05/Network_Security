@@ -8,4 +8,5 @@ pymongo[srv]
 pyaml
 dill
 mlflow
+dagshub
 #-e .

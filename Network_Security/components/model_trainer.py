@@ -21,6 +21,10 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import (AdaBoostClassifier,RandomForestClassifier,GradientBoostingClassifier)
 import mlflow
 
+
+import dagshub
+dagshub.init(repo_owner='Coder-Aditya05', repo_name='Network_Security', mlflow=True)
+
 class ModelTrainer:
     def __init__(self, model_trainer_config: ModelTrainerConfig, data_transformation_artifact: DataTransformationArtifact):
         try:
@@ -30,9 +34,7 @@ class ModelTrainer:
             raise NetworkSecurityException(e, sys)
 
     def track_ml_flow(self, best_model, classification_train_metric, classification_test_metric):
-        # ✅ Use local folder — no server needed
-        mlflow.set_tracking_uri("mlruns")  
-        mlflow.set_experiment("NetworkSecurity")
+        
 
         with mlflow.start_run():
             mlflow.log_metric("train_f1_score",        classification_train_metric.f1_score)
@@ -90,6 +92,8 @@ class ModelTrainer:
 
         Network_Model = NetworkModel(preprocessor=preprocessor, model=best_model)
         save_object(self.model_trainer_config.trained_model_file_path, obj=Network_Model)
+
+        save_object("final_model/model.pkl",best_model)
 
         model_trainer_artifact = ModelTrainerArtifact(
             trained_model_file_path=self.model_trainer_config.trained_model_file_path,
